@@ -1,0 +1,4 @@
+[submodule "third_party/GR00T-pickup-bottle"]
+	path = third_party/GR00T-pickup-bottle
+	url = git@github.com:Alexsandr52/GR00T-pickup-bottle.git
+	branch = arkestrator
