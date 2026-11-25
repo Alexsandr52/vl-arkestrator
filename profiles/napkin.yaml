@@ -1,0 +1,33 @@
+# Салфетка: чекпойнта пока нет. Профиль выключен до обучения; поля ниже — заготовка,
+# image_key/prompt/start_pose уточнить по датасету салфетки.
+name: napkin
+enabled: false
+display_ru: салфетка
+accusative_ru: салфетку
+synonyms_ru: [салфетк, платоч]
+detector_classes: [napkin, tissue paper]
+vla:
+  contract: arkestrator_stdio_v1
+  policy: pi05
+  server: vla_servers/pi05_stdio_server.py
+  image_key: observation.images.head
+  prompt: Pick up napkin
+  horizon: 50
+  execute_steps: 50
+  device: cuda
+  noise_seed: null
+grasp:
+  hand: right
+  start_pose: training_start
+  end: contact_or_time              # тактильного контакта у салфетки почти нет
+  max_policy_seconds: 30
+  tail: napkin_pinch
+  max_attempts: 3
+  verify:
+    tactile: ignore                 # салфетка даёт ~0 Па; главное — визуальная проверка
+    visual: required
+    visual_votes: 3
+    visual_needed: 2
+  carry_check: none
+ready_pose: ready
+handover_pose: handover_right

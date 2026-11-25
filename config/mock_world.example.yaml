@@ -1,0 +1,25 @@
+# Комната для офлайн-режима: python -m arkestrator --mock
+# Мир: x вперёд от стартовой позы робота, y влево, м. Робот смотрит вдоль +x.
+robot: [0.0, 0.0, 0.0]
+
+objects:
+  # Бутылка на столе сзади-слева: робот найдёт её поворотом.
+  - {name: bottle_red, label: bottle, position: [-1.8, 1.2, 0.0], attributes: [красный]}
+  - {name: bottle_blue, label: bottle, position: [-1.8, 2.0, 0.0], attributes: [синий]}
+  - {name: box, label: box, position: [1.5, -2.2, 0.0]}
+
+persons:
+  # Тот, кто даёт команду, стоит перед роботом.
+  - {name: operator, position: [1.3, 0.1], embedding: [1, 0, 0, 0, 0, 0, 0, 0]}
+  - {name: visitor, position: [-0.5, -2.5], embedding: [0, 1, 0, 0, 0, 0, 0, 0]}
+
+# Положение предмета в системе робота, как при записи датасета (на роботе задаётся через Teach).
+taught:
+  bottle: [0.42, -0.18, 0.0]
+  box: [0.45, 0.0, 0.0]
+
+scenario:
+  # Первая попытка взять бутылку промахивается, вторая успешна.
+  grasp_results: {bottle: [false, true]}
+  # drop_after_m: 1.0      # уронить предмет после 1 м переноса
+  # fault_after_s: 120     # перегрев → SAFE_HOLD

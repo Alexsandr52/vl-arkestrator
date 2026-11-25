@@ -1,0 +1,38 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.venv/
+.env
+.env.*
+*.egg-info/
+
+# Local settings, taught poses and secrets
+config/local.json
+config/session.yaml
+config/taught/
+*.pem
+*.key
+
+# Runtime results and large artifacts
+outputs/
+datasets/
+runs/
+logs/
+*.log
+wandb/
+*.ckpt
+*.safetensors
+*.pt
+*.pth
+*.onnx
+*.engine
+*.npz
+*.npy
+*.mp4
+*.wav
+*.db
+*.sqlite
+
+# Pinned robot-side checkout (submodule content is tracked by SHA)
+/third_party/*/

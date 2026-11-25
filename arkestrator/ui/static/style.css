@@ -1,0 +1,74 @@
+:root {
+  --bg: #f4f5f7;
+  --panel: #ffffff;
+  --text: #1d2330;
+  --muted: #6b7385;
+  --line: #dde1e8;
+  --accent: #2563eb;
+  --ok: #15803d;
+  --warn: #b45309;
+  --stop: #c81e1e;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #14161b; --panel: #1d2028; --text: #e6e8ee; --muted: #9aa2b4; --line: #2d313c; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-size: 15px; }
+header {
+  display: flex; align-items: center; gap: 14px; padding: 10px 18px;
+  background: var(--panel); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 2;
+}
+h1 { font-size: 18px; margin: 0; }
+h2 { font-size: 15px; margin: 0 0 10px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+h3 { font-size: 14px; margin: 14px 0 6px; color: var(--muted); }
+.muted { color: var(--muted); font-size: 13px; }
+.badge { padding: 3px 10px; border-radius: 999px; background: var(--line); font-weight: 600; font-size: 13px; }
+.badge.idle { background: #dcfce7; color: #14532d; }
+.badge.busy { background: #dbeafe; color: #1e3a8a; }
+.badge.hold { background: #fee2e2; color: #7f1d1d; }
+.badge.off { background: var(--line); color: var(--muted); }
+#link { margin-left: auto; }
+main { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px; padding: 14px 18px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; min-width: 0; }
+.wide { grid-column: 1 / -1; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; }
+button {
+  font: inherit; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--line);
+  background: var(--bg); color: var(--text); cursor: pointer;
+}
+button:disabled { opacity: .4; cursor: not-allowed; }
+button.accent { background: var(--accent); color: #fff; border-color: var(--accent); }
+button.stop { background: var(--stop); color: #fff; border-color: var(--stop); font-weight: 700; padding: 8px 22px; }
+.talk { margin-top: 14px; }
+.talk-btn { width: 100%; padding: 16px; font-size: 16px; }
+.talk-btn.recording { background: var(--stop); color: #fff; border-color: var(--stop); }
+#cmd-form { display: flex; gap: 8px; margin-top: 10px; }
+#cmd { flex: 1; font: inherit; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--text); }
+.reply { min-height: 1.3em; margin: 8px 0 0; }
+.reply.ok { color: var(--ok); }
+.reply.err { color: var(--stop); }
+details { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 10px; }
+details label { display: block; margin: 6px 0; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; margin: 0; }
+dt { color: var(--muted); }
+dd { margin: 0; overflow-wrap: anywhere; }
+.attention { background: #fef3c7; color: #78350f; padding: 8px 10px; border-radius: 8px; }
+ul, ol { margin: 0; padding-left: 18px; }
+#said li { margin: 2px 0; }
+#map { width: 100%; aspect-ratio: 1; background: var(--bg); border-radius: 8px; }
+.legend { font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 3px; vertical-align: middle; }
+.dot.robot { background: var(--accent); }
+.dot.path { background: #8b5cf6; }
+.dot.fix { background: var(--warn); }
+.dot.commander { background: var(--ok); }
+.dot.ghost { background: #9ca3af; }
+#camera { width: 100%; margin-top: 10px; border-radius: 8px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+td, th { text-align: left; padding: 5px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+#events { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; max-height: 320px; overflow: auto; padding-left: 0; list-style: none; }
+#events li { padding: 2px 0; border-bottom: 1px dashed var(--line); overflow-wrap: anywhere; }
+#events .t { color: var(--muted); margin-right: 6px; }
+#events .k { font-weight: 600; margin-right: 6px; }

@@ -1,0 +1,37 @@
+# Бутылка: π0.5 из GR00T-pickup-bottle (ADR 0022). Единицы: м, с, рад.
+# python и checkpoint берутся из config/local.json → vla.bottle.
+name: bottle
+enabled: true
+display_ru: бутылка
+accusative_ru: бутылку
+# Основы слов: «бутылку», «бутылочку», «бутылки» распознаются по началу слова.
+synonyms_ru: [бутылк, бутылочк]
+detector_classes: [bottle]
+vla:
+  # Протокол bottle/inference/server.py: READY/RESULT, npz (image_rgb_jpeg, state[28], request_id).
+  # Свой сервер (vla_servers/pi05_stdio_server.py, P1); оригинальный bottle/inference/server.py
+  # совместим как contract: lerobot_stdio_v1.
+  contract: arkestrator_stdio_v1
+  policy: pi05
+  server: vla_servers/pi05_stdio_server.py
+  image_key: observation.images.head
+  prompt: Pick up bottle
+  horizon: 50          # config/vla.yaml сервера (ADR 0023)
+  execute_steps: 50
+  device: cuda
+  noise_seed: null
+grasp:
+  hand: right
+  start_pose: training_start        # config/preparation_pose.yaml бутылки
+  end: contact                      # VLA останавливается на тактильном контакте / упоре пальцев (ADR 0017)
+  max_policy_seconds: 30            # как --seconds 30 в run_bottle.py
+  tail: bottle_squeeze_lift_carry   # дожатие → подъём 6 см → ладонь вверх → перенос (ADR 0024/0025)
+  max_attempts: 3
+  verify:
+    tactile: required               # контакт по давлению или упор пальцев; «кулак без давления» = пусто
+    visual: required                # бутылки больше нет на прежнем месте стола
+    visual_votes: 3
+    visual_needed: 2
+  carry_check: carry_pressure       # CarryPressureGuard во время ходьбы
+ready_pose: ready
+handover_pose: handover_right

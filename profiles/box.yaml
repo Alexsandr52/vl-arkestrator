@@ -1,0 +1,39 @@
+# Коробка: π0.5 из vzyat-korobku-peremestit (checkpoint 001000, LeRobot 0.6.2).
+# Репо коробки только читаем: чекпойнт и venv используются как есть.
+name: box
+enabled: true
+display_ru: коробка
+accusative_ru: коробку
+synonyms_ru: [коробк, короб, ящик]
+detector_classes: [cardboard box, box]
+vla:
+  # Свой обобщённый сервер (протокол как у бутылки, --task/--image-key) поверх venv коробки.
+  # Запасной вариант: оригинальный pi05_fixed_1000_stdio_20261029.py → contract: box_stdio_v1
+  # (требует пользователя ildar, 18 ГиБ свободной VRAM и training.lock).
+  contract: arkestrator_stdio_v1
+  policy: pi05
+  server: vla_servers/pi05_stdio_server.py
+  image_key: observation.images.head_camera
+  prompt: Pick up box
+  horizon: 50          # chunk_size 50; SessionPump держит один горизонт на сессию
+  execute_steps: 10    # n_action_steps=10 у чекпойнта коробки
+  device: cuda
+  noise_seed: 123      # чекпойнт 1000 проверен только с torch.manual_seed(123) на каждый запрос
+grasp:
+  hand: both
+  start_pose: box_start             # подготовка рук коробки (разведение, подъём, home)
+  # Как model_box_guarded_run (--watch-contact --tuck-on-contact-candidate): VLA до кандидата
+  # контакта ладоней или 25 с; дожатие и подтягивание выполняются в любом случае.
+  # G1-бэкенд обязан сохранить require_open_hands / validate_open_palm_action на каждом шаге.
+  end: contact_or_time
+  max_policy_seconds: 25
+  tail: box_squeeze_tuck            # дожатие 3.5 мм на ладонь → подтягивание 10 см
+  max_attempts: 3
+  verify:
+    tactile: ignore                 # ладони дают слабый сигнал давления
+    visual: required                # коробка снята со стола
+    visual_votes: 3
+    visual_needed: 2
+  carry_check: none
+ready_pose: ready
+handover_pose: handover_both

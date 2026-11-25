@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="csrf" content="{{CSRF}}">
+<title>VL-оркестратор G1</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <h1>VL-оркестратор G1</h1>
+  <span id="phase" class="badge">…</span>
+  <span id="session" class="muted"></span>
+  <span id="link" class="muted"></span>
+  <button id="btn-stop" class="stop" title="Остановить базу и заморозить руки. Дальше — только завершение сессии.">STOP</button>
+</header>
+
+<main>
+  <section class="panel" id="control">
+    <h2>Управление</h2>
+    <div class="row">
+      <button id="btn-start">Начать сессию</button>
+      <button id="btn-cancel">Отменить задачу</button>
+      <button id="btn-release" class="accent">Отпусти</button>
+    </div>
+
+    <div class="talk">
+      <button id="btn-talk" class="talk-btn">🎙 Удерживайте и говорите</button>
+      <form id="cmd-form">
+        <input id="cmd" placeholder="Например: найди бутылку и принеси" maxlength="300" autocomplete="off">
+        <button type="submit">Отправить</button>
+      </form>
+      <p id="reply" class="reply"></p>
+      <p id="heard" class="muted"></p>
+    </div>
+
+    <details id="end-box">
+      <summary>Завершить сессию и отдать руки заводскому контроллеру</summary>
+      <p class="muted">Шаг 1: робот встаёт в удержание и выдаёт одноразовый токен. Шаг 2: проверьте
+        обстановку и подтвердите именно это удержание.</p>
+      <button id="btn-prepare">1. Подготовить отдачу рук</button>
+      <label><input type="checkbox" id="chk-path"> Путь рук к заводской позе свободен</label>
+      <label><input type="checkbox" id="chk-object"> Предмет поддержан или его нет в руке</label>
+      <button id="btn-end">2. Подтвердить и отдать руки</button>
+      <p id="release-token" class="muted"></p>
+    </details>
+  </section>
+
+  <section class="panel" id="task">
+    <h2>Задача</h2>
+    <dl id="task-info"></dl>
+    <p id="attention" class="attention" hidden></p>
+    <h3>Робот сказал</h3>
+    <ul id="said"></ul>
+  </section>
+
+  <section class="panel" id="map-panel">
+    <h2>Карта по одометрии</h2>
+    <svg id="map" viewBox="-3 -3 6 6" role="img" aria-label="Положение робота"></svg>
+    <p class="legend"><span class="dot robot"></span>робот <span class="dot path"></span>путь
+      <span class="dot fix"></span>предмет <span class="dot commander"></span>кто дал команду
+      <span class="dot ghost"></span>мир (mock)</p>
+    <img id="camera" alt="Головная камера" hidden>
+  </section>
+
+  <section class="panel" id="profiles-panel">
+    <h2>Профили</h2>
+    <table id="profiles"></table>
+    <h3>Модели VLA</h3>
+    <ul id="vla"></ul>
+  </section>
+
+  <section class="panel" id="history-panel">
+    <h2>История задач</h2>
+    <table id="history"></table>
+  </section>
+
+  <section class="panel wide" id="events-panel">
+    <h2>События</h2>
+    <ol id="events"></ol>
+  </section>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>

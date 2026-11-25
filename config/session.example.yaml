@@ -1,0 +1,79 @@
+# Настройки сессии. Скопируйте в config/session.yaml и меняйте там (файл не в Git).
+# Единицы: м, с, рад; углы в *_deg — градусы. Значения навигации взяты из
+# GR00T-pickup-bottle/disposal.yaml (проверены 19.11), причины — в комментариях.
+
+nav:
+  tick_s: 0.02
+  # Заводская ходьба FSM 500 молча игнорирует < ~0.2 м/с (19.11: 80 с стоял при 0.1 м/с)
+  # и поворот < ~0.3 рад/с.
+  walk_speed_m_s: 0.20
+  heading_gain: 1.2
+  # Шаг назад от стола перед любым поворотом или уходом.
+  backstep_m: 0.30
+  backstep_speed_m_s: 0.20
+  # Поиск: поворот на месте (минус = по часовой), пока цель не попадётся detect_frames кадров подряд.
+  search_yaw_rate_rad_s: -0.30
+  search_sweep_deg: 360
+  detect_frames: 2
+  # Мёртвая зона центрирования: при 3° доворот не сходился — короткие повороты G1 не исполняет.
+  center_box_deg: 10
+  center_brake_lead_deg: 2
+  center_yaw_rate_rad_s: 0.30
+  center_attempts: 4
+  recover_turn_deg: 40
+  # Вблизи стола только один крупный доворот: каждый поворот перебирает ногами.
+  near_max_bearing_deg: 20
+  settle_s: 0.4
+  # База принимает SetVelocity, но одометрия стоит дольше этого → ошибка (восстановимая).
+  stall_timeout_s: 4.0
+  # Расстояние до предмета, на котором робот останавливается и перемеряет перед финальным подходом.
+  standoff_m: 0.80
+  sidestep_min_m: 0.04
+  final_min_m: 0.03
+  measure_frames: 3
+  measure_timeout_s: 2.0
+  retrace_min_segment_m: 0.25
+  # Без лидара коридор всегда UNKNOWN; true запретит ходьбу, пока источник препятствий не скажет CLEAR.
+  require_clear_corridor: false
+  # Ходьба у стола (шаг назад, финальный подход, подшаги): защиты из post_grasp_walk.perform_motion —
+  # уход с прямой > 6 см, курс > 10°, движение не туда > 3 см → SAFE_HOLD; поворот ограничен 0.12 рад/с.
+  careful_corridor_m: 0.06
+  careful_heading_deg: 10
+  careful_wrong_direction_m: 0.03
+  careful_max_yaw_rate_rad_s: 0.12
+  # Жёсткие потолки любой команды базы.
+  max_linear_m_s: 0.35
+  max_yaw_rate_rad_s: 0.6
+
+person:
+  labels: [person]
+  commander_max_range_m: 3.5
+  commander_max_bearing_deg: 35
+  standoff_m: 0.9
+  standoff_tolerance_m: 0.10
+  max_step_m: 0.5
+  max_approach_steps: 8
+  search_yaw_rate_rad_s: 0.30
+  search_sweep_deg: 360
+  reid_threshold: 0.6
+  reid_margin: 0.05
+  match_radius_m: 1.5
+
+grasp:
+  relocate_tolerance_m: 0.04
+  visual_check_radius_m: 0.12
+  # Подтверждать цель VLM на кропе: never | attributes (только если в команде есть признак, «красную») | always.
+  verify_target: attributes
+
+handover:
+  open_settle_s: 1.0
+
+ui:
+  host: 127.0.0.1
+  port: 8770
+
+outputs_dir: outputs
+profiles_dir: profiles
+taught_dir: config/taught
+# Сколько π0.5 держать загруженными одновременно (решается после tools/measure_vram.py).
+vla_resident: 1

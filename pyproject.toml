@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vl-arkestrator"
+version = "0.1.0"
+description = "G1 + Dex3 fetch orchestrator: voice command, search, VLA grasp with retry, handover"
+requires-python = ">=3.10"
+dependencies = ["PyYAML>=6", "numpy>=1.26"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+include = ["arkestrator*"]
+
+[tool.setuptools.package-data]
+arkestrator = ["ui/static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

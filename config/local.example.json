@@ -1,0 +1,27 @@
+{
+  "ssh_alias": "g1-gpu",
+  "remote_root": "",
+  "bottle_checkout": "third_party/GR00T-pickup-bottle",
+  "runtime_root": "",
+  "vla": {
+    "bottle": {"python": "", "checkpoint": ""},
+    "box": {"python": "", "checkpoint": ""},
+    "napkin": {"python": "", "checkpoint": ""}
+  },
+  "perception": {
+    "python": "",
+    "socket": "",
+    "asr_model": "large-v3-turbo",
+    "vlm_model": "",
+    "detector_weights": "",
+    "reid_model": ""
+  },
+  "camera": {
+    "host": "192.168.123.164",
+    "user": "unitree",
+    "known_hosts": "config/known_hosts",
+    "head_serial": "254522076679",
+    "d405_serial": "262622274568"
+  },
+  "audio": {"iface": ""}
+}
